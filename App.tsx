@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import Toast, {BaseToast, ToastConfig} from 'react-native-toast-message';
+import TabNavigation from './src/navigation/TabNavigation';
 
 // import screens
 import Login from './src/screens/Auth/Login/Login';
@@ -26,12 +27,12 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
         }}>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Home" component={TabNavigation} />
       </Stack.Navigator>
       <Toast visibilityTime={1500} position="bottom" config={toastConfig} />
     </NavigationContainer>

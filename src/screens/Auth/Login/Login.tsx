@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
 import Button from '../../../components/common/Button';
 import Input from '../../../components/common/Input';
 import LottieComponent from '../../../components/common/LottieComponent';
 import {ToastMessage} from '../../../utils/Helpers';
 import LottieFiles from '../../../utils/LottieFiles';
 import {validateEmail} from '../../../utils/Validations';
-import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 
 interface Props {
@@ -22,26 +20,22 @@ const Login: React.FC<Props> = props => {
   const [visiblePassword, setVisiblePassword] = useState<boolean>(true);
 
   const onLogin = () => {
-    if (!email) {
-      ToastMessage({message: 'Please enter your email address'});
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      ToastMessage({message: 'Please enter a valid email address'});
-      return;
-    }
-
-    if (!password) {
-      ToastMessage({message: 'Please enter your password'});
-      return;
-    }
-
-    if (password.length < 8) {
-      ToastMessage({
-        message: 'Password should be at least 8 characters long',
-      });
-    }
+    // if (!email) {
+    //   ToastMessage({message: 'Please enter your email address'});
+    //   return;
+    // } else if (!validateEmail(email)) {
+    //   ToastMessage({message: 'Please enter a valid email address'});
+    //   return;
+    // } else if (!password) {
+    //   ToastMessage({message: 'Please enter your password'});
+    //   return;
+    // } else if (password.length < 8) {
+    //   ToastMessage({
+    //     message: 'Password should be at least 8 characters long',
+    //   });
+    // } else {
+    navigation.navigate('Home');
+    // }
   };
 
   return (
