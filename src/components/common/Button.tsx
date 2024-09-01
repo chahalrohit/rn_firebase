@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({buttonName, onPress, buttonStyle}) => {
         style={
           {
             height: resWidth(14),
-            width: resWidth(100) - constants.horizontalSpace,
+            width: '100%',
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: constants.borderRadius1,

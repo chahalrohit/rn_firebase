@@ -19,5 +19,5 @@ export const borderRadius2: number = resWidth(2);
 export const borderRadius3: number = resWidth(3);
 export const cardRadius: number = resWidth(2);
 
-export const horizontalSpace: number = resWidth(12);
+export const horizontalSpace: number = resWidth(6);
 export const verticalSpace: number = resWidth(3);

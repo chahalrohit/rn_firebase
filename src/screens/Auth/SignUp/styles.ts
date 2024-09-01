@@ -20,8 +20,8 @@ export default StyleSheet.create({
   inputMarginTop: {
     marginTop: constants.resWidth(5),
   } as ViewStyle,
-  signInButton: {
-    marginTop: constants.resWidth(25),
+  signUpButton: {
+    marginTop: constants.resWidth(15),
   } as ViewStyle,
   signUpContainer: {
     flexDirection: 'row',

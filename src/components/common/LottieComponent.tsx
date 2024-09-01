@@ -6,7 +6,6 @@ import lottieFiles from '../../utils/LottieFiles';
 
 // Define the props interface
 interface LottieComponentProps {
-  style?: StyleProp<ViewStyle>; // Optional style prop for the container view
   lottieStyle?: StyleProp<ViewStyle>; // Optional style prop for the Lottie animation
   source: AnimationObject | number | any; // Source prop can be a JSON object or a require statement
 }

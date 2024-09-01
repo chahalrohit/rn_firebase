@@ -5,10 +5,10 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Button from '../../../components/common/Button';
 import Input from '../../../components/common/Input';
 import LottieComponent from '../../../components/common/LottieComponent';
+import {resWidth} from '../../../utils/Constants';
 import {ToastMessage} from '../../../utils/Helpers';
 import LottieFiles from '../../../utils/LottieFiles';
 import {validateEmail} from '../../../utils/Validations';
-import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 
 interface Props {
@@ -20,8 +20,12 @@ const Login: React.FC<Props> = props => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [visiblePassword, setVisiblePassword] = useState<boolean>(true);
+  const [confirmVisiblePassword, setConfirmVisiblePassword] =
+    useState<boolean>(true);
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-  const onLogin = () => {
+  const onSignUp = () => {
+    navigation.navigate('SignUp');
     if (!email) {
       ToastMessage({message: 'Please enter your email address'});
       return;
@@ -42,6 +46,23 @@ const Login: React.FC<Props> = props => {
         message: 'Password should be at least 8 characters long',
       });
     }
+
+    if (!confirmPassword) {
+      ToastMessage({message: 'Please enter your password'});
+      return;
+    }
+
+    if (confirmPassword.length < 8) {
+      ToastMessage({
+        message: 'Password should be at least 8 characters long',
+      });
+    }
+
+    if (confirmPassword !== password) {
+      ToastMessage({
+        message: 'Password not confirmed',
+      });
+    }
   };
 
   return (
@@ -50,8 +71,17 @@ const Login: React.FC<Props> = props => {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollViewContent}>
-        <LottieComponent source={LottieFiles.login} />
-        <Text style={styles.signInText}>Sign In</Text>
+        <LottieComponent
+          source={LottieFiles.signup}
+          lottieStyle={{
+            height: resWidth(70),
+            width: resWidth(70),
+            marginTop: resWidth(10),
+          }}
+        />
+        <Text style={[styles.signInText, {marginTop: resWidth(12)}]}>
+          Create New Account
+        </Text>
         <Input
           placeholder="Email"
           value={email}
@@ -68,15 +98,27 @@ const Login: React.FC<Props> = props => {
           setVisiblePassword={() => setVisiblePassword(!visiblePassword)}
           maxLength={8}
         />
+        <Input
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChangeText={(value: string) => setConfirmPassword(value)}
+          inputStyleExt={styles.inputMarginTop}
+          secureTextEntry
+          visiblePassword={confirmVisiblePassword}
+          setVisiblePassword={() =>
+            setConfirmVisiblePassword(!confirmVisiblePassword)
+          }
+          maxLength={8}
+        />
         <Button
-          buttonName="SIGN IN"
-          onPress={onLogin}
-          buttonStyle={styles.signInButton}
+          buttonName="SIGN UP"
+          onPress={onSignUp}
+          buttonStyle={styles.signUpButton}
         />
         <View style={styles.signUpContainer}>
-          <Text style={styles.signUpText}>Don't have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-            <Text style={styles.signUpLink}>Sign Up</Text>
+          <Text style={styles.signUpText}>Already have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={styles.signUpLink}>Login</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
