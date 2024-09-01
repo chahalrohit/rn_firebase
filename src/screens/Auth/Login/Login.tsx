@@ -8,6 +8,8 @@ import {ToastMessage} from '../../../utils/Helpers';
 import LottieFiles from '../../../utils/LottieFiles';
 import {validateEmail} from '../../../utils/Validations';
 import styles from './styles';
+import auth from '@react-native-firebase/auth';
+import {CommonActions} from '@react-navigation/native';
 
 interface Props {
   navigation: any;
@@ -19,23 +21,46 @@ const Login: React.FC<Props> = props => {
   const [password, setPassword] = useState<string>('');
   const [visiblePassword, setVisiblePassword] = useState<boolean>(true);
 
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
   const onLogin = () => {
-    // if (!email) {
-    //   ToastMessage({message: 'Please enter your email address'});
-    //   return;
-    // } else if (!validateEmail(email)) {
-    //   ToastMessage({message: 'Please enter a valid email address'});
-    //   return;
-    // } else if (!password) {
-    //   ToastMessage({message: 'Please enter your password'});
-    //   return;
-    // } else if (password.length < 8) {
-    //   ToastMessage({
-    //     message: 'Password should be at least 8 characters long',
-    //   });
-    // } else {
-    navigation.navigate('Home');
-    // }
+    if (!email) {
+      ToastMessage({message: 'Please enter your email address'});
+      return;
+    } else if (!validateEmail(email)) {
+      ToastMessage({message: 'Please enter a valid email address'});
+      return;
+    } else if (!password) {
+      ToastMessage({message: 'Please enter your password'});
+      return;
+    } else if (password.length < 8) {
+      ToastMessage({
+        message: 'Password should be at least 8 characters long',
+      });
+    } else {
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{name: 'Home'}],
+            }),
+          );
+          ToastMessage({message: 'User account created & signed in!'});
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            ToastMessage({message: 'That email address is already in use!'});
+          }
+          if (error.code === 'auth/invalid-email') {
+            ToastMessage({message: 'That email address is invalid!'});
+          }
+          console.error(error);
+        });
+    }
   };
 
   return (
