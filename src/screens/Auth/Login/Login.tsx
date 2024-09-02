@@ -1,16 +1,61 @@
-import React, {useState, useEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
+import {CommonActions} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import SQLite from 'react-native-sqlite-storage';
 import Button from '../../../components/common/Button';
 import Input from '../../../components/common/Input';
+import Loader from '../../../components/common/Loader';
 import LottieComponent from '../../../components/common/LottieComponent';
 import {ToastMessage} from '../../../utils/Helpers';
 import LottieFiles from '../../../utils/LottieFiles';
 import {validateEmail} from '../../../utils/Validations';
 import styles from './styles';
-import auth from '@react-native-firebase/auth';
-import {CommonActions} from '@react-navigation/native';
-import Loader from '../../../components/common/Loader';
+
+const db = SQLite.openDatabase(
+  {
+    name: 'MyDatabase.db',
+    location: 'default',
+  },
+  () => {
+    console.log('Database opened successfully');
+  },
+  error => {
+    console.error('Error opening database:', error);
+  },
+);
+
+const createUserTable = () => {
+  db.transaction(tx => {
+    tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS UserInfo (
+        uid TEXT PRIMARY KEY,
+        displayName TEXT,
+        email TEXT,
+        emailVerified INTEGER,
+        isAnonymous INTEGER,
+        creationTime INTEGER,
+        lastSignInTime INTEGER,
+        phoneNumber TEXT,
+        photoURL TEXT,
+        providerId TEXT,
+        tenantId TEXT
+      )`,
+      [],
+      (tx, results) => {
+        console.log('User table created successfully');
+      },
+      error => {
+        console.log('Error creating user table:', error);
+      },
+    );
+  });
+};
+
+// Call createUserTable to create the table
+createUserTable();
 
 interface Props {
   navigation: any;
@@ -63,7 +108,12 @@ const Login: React.FC<Props> = props => {
         email,
         password,
       );
-      console.log('User signed in:', userCredential.user);
+      console.log('User signed in:', JSON.stringify(userCredential.user));
+      saveUserInfo(userCredential?.user);
+      await AsyncStorage.setItem(
+        'loginInfo',
+        JSON.stringify(userCredential.user),
+      );
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
@@ -75,6 +125,46 @@ const Login: React.FC<Props> = props => {
       setLoading(false);
       console.error('Login failed:', error);
     }
+  };
+
+  const saveUserInfo = (userInfo: any) => {
+    const {
+      uid,
+      displayName,
+      email,
+      emailVerified,
+      isAnonymous,
+      metadata: {creationTime, lastSignInTime},
+      phoneNumber,
+      photoURL,
+      providerId,
+      tenantId,
+    } = userInfo;
+
+    db.transaction(tx => {
+      tx.executeSql(
+        `INSERT OR REPLACE INTO UserInfo (uid, displayName, email, emailVerified, isAnonymous, creationTime, lastSignInTime, phoneNumber, photoURL, providerId, tenantId) VALUES (?,?,?,?,?,?,?,?,?,?,?)`,
+        [
+          uid,
+          displayName,
+          email,
+          emailVerified ? 1 : 0, // Store boolean as 1 or 0
+          isAnonymous ? 1 : 0, // Store boolean as 1 or 0
+          creationTime,
+          lastSignInTime,
+          phoneNumber,
+          photoURL,
+          providerId,
+          tenantId,
+        ],
+        (tx, results) => {
+          console.log('User information saved successfully');
+        },
+        error => {
+          console.log('Error saving user information:', error);
+        },
+      );
+    });
   };
 
   return (

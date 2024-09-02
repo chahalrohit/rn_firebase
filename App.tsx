@@ -7,6 +7,7 @@ import TabNavigation from './src/navigation/TabNavigation';
 import Colors from './src/utils/Colors';
 
 // import screens
+import Splash from './src/screens/Splash/Splash';
 import Login from './src/screens/Auth/Login/Login';
 import SignUp from './src/screens/Auth/SignUp/SignUp';
 
@@ -32,9 +33,11 @@ function App() {
         barStyle={'dark-content'}
       />
       <Stack.Navigator
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="HomeScreen" component={TabNavigation} />

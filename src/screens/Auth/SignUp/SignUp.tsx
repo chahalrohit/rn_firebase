@@ -1,17 +1,17 @@
+import auth from '@react-native-firebase/auth';
+import {CommonActions} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import auth from '@react-native-firebase/auth';
 import Button from '../../../components/common/Button';
 import Input from '../../../components/common/Input';
+import Loader from '../../../components/common/Loader';
 import LottieComponent from '../../../components/common/LottieComponent';
 import {resWidth} from '../../../utils/Constants';
 import {ToastMessage} from '../../../utils/Helpers';
 import LottieFiles from '../../../utils/LottieFiles';
 import {validateEmail} from '../../../utils/Validations';
 import styles from './styles';
-import {CommonActions} from '@react-navigation/native';
-import Loader from '../../../components/common/Loader';
 
 interface Props {
   navigation: any;

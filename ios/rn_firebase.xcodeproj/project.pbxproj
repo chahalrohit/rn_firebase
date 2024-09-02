@@ -15,6 +15,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		17A9A26C2C85E7CC0059263F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A9A26B2C85E7CC0059263F /* libsqlite3.tbd */; };
 		17AC82FE2C84995D007A30CD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17AC82FD2C84995D007A30CD /* GoogleService-Info.plist */; };
 		1F9B2F74F70747278B466B6F /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08865EEC580347D5A9A73B77 /* Poppins-BoldItalic.ttf */; };
 		24C9603D7E0248FD91D2FBF7 /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF1F03FB7A8F42E9BCE4FB54 /* Poppins-SemiBoldItalic.ttf */; };
@@ -56,6 +57,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = rn_firebase/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = rn_firebase/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = rn_firebase/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		17A9A26B2C85E7CC0059263F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		17AC82FD2C84995D007A30CD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1B4C2C79B2500BD66237DD9E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = rn_firebase/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		1DA376057C0B40DC9BC4126A /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../src/assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17A9A26C2C85E7CC0059263F /* libsqlite3.tbd in Frameworks */,
 				02A8119192F9A9CDFCA92DF9 /* Pods_rn_firebase.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +141,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				17A9A26B2C85E7CC0059263F /* libsqlite3.tbd */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				B172D50EA6A78ACB2360E651 /* Pods_rn_firebase.framework */,
 				B67F34E883253BA8F52E7256 /* Pods_rn_firebase_rn_firebaseTests.framework */,

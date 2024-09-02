@@ -1,27 +1,14 @@
-import React, {useState, useEffect} from 'react';
-import {
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-  ScrollView,
-  Keyboard,
-} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
-import * as constants from '../../utils/Constants';
-import LottieComponent from '../../components/common/LottieComponent';
-import {ToastMessage} from '../../utils/Helpers';
-import LottieFiles from '../../utils/LottieFiles';
-import {validateEmail} from '../../utils/Validations';
-import Colors from '../../utils/Colors';
-import * as Fonts from '../../utils/Fonts';
-import Header from '../../components/common/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
-import {resWidth} from '../../utils/Constants';
 import {CommonActions} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {Keyboard, SafeAreaView, ScrollView, Text} from 'react-native';
+import Button from '../../components/common/Button';
+import Header from '../../components/common/Header';
+import Input from '../../components/common/Input';
 import Loader from '../../components/common/Loader';
+import {ToastMessage} from '../../utils/Helpers';
+import styles from './styles';
 
 interface Props {
   navigation: any;
@@ -50,7 +37,6 @@ const Profile: React.FC<Props> = props => {
       },
     );
 
-    // Cleanup the listeners on unmount
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
@@ -77,6 +63,7 @@ const Profile: React.FC<Props> = props => {
     auth()
       .signOut()
       .then(() => {
+        clearLocalStorage();
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
@@ -92,48 +79,37 @@ const Profile: React.FC<Props> = props => {
       });
   };
 
+  const clearLocalStorage = async () => {
+    await AsyncStorage.removeItem('loginInfo');
+  };
+
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: Colors.bgColor,
-      }}>
+    <SafeAreaView style={styles.container}>
       <Loader loading={loading} />
       <Header title="Profile" />
-      <ScrollView
-        contentContainerStyle={{
-          paddingHorizontal: constants.horizontalSpace,
-          justifyContent: 'flex-end',
-        }}>
-        <Text
-          style={{
-            marginTop: constants.resWidth(5),
-            fontFamily: Fonts.typeSemiBold,
-            fontSize: Fonts.extraLargeFont,
-            color: Colors.baseColor,
-          }}>
-          Update User Name
-        </Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.updateText}>Update User Name</Text>
         <Input
           placeholder="Name"
           value={name}
           onChangeText={(value: string) => setName(value)}
-          inputStyleExt={{marginTop: constants.resWidth(5)}}
+          inputStyleExt={styles.input}
         />
         <Button
           buttonName="Update Name"
           onPress={onUpdateName}
-          buttonStyle={{margin: resWidth(5)}}
+          buttonStyle={styles.button}
         />
       </ScrollView>
       {!keyboardStatus && (
         <Button
           buttonName="Logout"
           onPress={onLogout}
-          buttonStyle={{margin: resWidth(5)}}
+          buttonStyle={styles.button}
         />
       )}
     </SafeAreaView>
   );
 };
+
 export default Profile;

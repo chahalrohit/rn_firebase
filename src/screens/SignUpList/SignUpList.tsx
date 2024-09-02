@@ -1,12 +1,10 @@
 import functions from '@react-native-firebase/functions';
-import React, {useCallback, useEffect, useState, useMemo} from 'react';
-import {FlatList, ListRenderItem, SafeAreaView, StyleSheet} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {FlatList, ListRenderItem, SafeAreaView} from 'react-native';
 import Header from '../../components/common/Header';
 import Loader from '../../components/common/Loader';
 import UserList from '../../components/list/UserList';
-import Colors from '../../utils/Colors';
-import {borderRadius2, horizontalSpace, resWidth} from '../../utils/Constants';
-import * as Fonts from '../../utils/Fonts';
+import styles from './styles';
 
 interface User {
   email: string;
@@ -27,6 +25,7 @@ const SignUpList: React.FC = () => {
         'listAllUsers',
       )();
       const users: User[] = result.data;
+      console.log('users ==>> ', JSON.stringify(users));
       setData(users);
       setLoading(false);
     } catch (error) {
@@ -56,41 +55,5 @@ const SignUpList: React.FC = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.bgColor,
-  },
-  flatListContentContainer: {
-    marginTop: resWidth(3),
-  },
-  itemContainer: {
-    flex: 1,
-    borderWidth: 1,
-    marginHorizontal: horizontalSpace,
-    justifyContent: 'center',
-    paddingVertical: resWidth(2),
-    borderRadius: borderRadius2,
-    marginVertical: resWidth(2),
-  },
-  infoRow: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: resWidth(3),
-  },
-  labelText: {
-    fontFamily: Fonts.typeBold,
-    fontSize: Fonts.normalFont,
-    color: Colors.textColor,
-  },
-  valueText: {
-    fontFamily: Fonts.typeRegular,
-    fontSize: Fonts.normalFont,
-    color: Colors.textColor,
-    marginLeft: resWidth(2),
-  },
-});
 
 export default React.memo(SignUpList);

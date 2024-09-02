@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button, StyleSheet, Modal} from 'react-native';
+import {Button, Modal, StyleSheet, Text, TextInput, View} from 'react-native';
 
 interface VerifyPhoneNumberModalProps {
   isVisible: boolean;

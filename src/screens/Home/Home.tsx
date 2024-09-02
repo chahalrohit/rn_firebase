@@ -1,36 +1,60 @@
-import React, {useState} from 'react';
-import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
-import LottieComponent from '../../components/common/LottieComponent';
-import {ToastMessage} from '../../utils/Helpers';
-import LottieFiles from '../../utils/LottieFiles';
-import {validateEmail} from '../../utils/Validations';
-import Colors from '../../utils/Colors';
-import * as Fonts from '../../utils/Fonts';
+import auth from '@react-native-firebase/auth';
+import React, {useEffect} from 'react';
+import {SafeAreaView, Text, View} from 'react-native';
+import SQLite from 'react-native-sqlite-storage';
 import Header from '../../components/common/Header';
+import styles from './styles';
+
+const db = SQLite.openDatabase(
+  {
+    name: 'userDB',
+    location: 'default',
+  },
+  () => {
+    console.log('Database opened successfully');
+  },
+  error => {
+    console.log('Error opening database:', error);
+  },
+);
 
 const Home = () => {
+  const user = auth().currentUser;
+
+  useEffect(() => {
+    getUserInfo(user?.uid);
+  }, []);
+
+  const getUserInfo = (uid: any) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM UserInfo WHERE uid = ?',
+        [uid],
+        (tx, results) => {
+          if (results.rows.length > 0) {
+            const user = results.rows.item(0);
+            console.log(`User Information:`, user);
+          } else {
+            console.log('No user information found for the given UID');
+          }
+        },
+        error => {
+          console.log('Error retrieving user information:', error);
+        },
+      );
+    });
+  };
+
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: Colors.bgColor,
-      }}>
+    <SafeAreaView style={styles.container}>
       <Header title="Home" />
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Text
-          style={{
-            fontFamily: Fonts.typeSemiBold,
-            fontSize: Fonts.largeFont,
-            color: Colors.textColor,
-            textAlign: 'center',
-          }}>
-          Welcome !!
+      <View style={styles.content}>
+        <Text style={styles.welcomeText}>
+          Welcome To Firebase Auth Services !!
         </Text>
       </View>
     </SafeAreaView>
   );
 };
+
 export default Home;

@@ -1,23 +1,11 @@
-import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Button from '../../components/common/Button';
-import Input from '../../components/common/Input';
-import LottieComponent from '../../components/common/LottieComponent';
-import {ToastMessage} from '../../utils/Helpers';
-import LottieFiles from '../../utils/LottieFiles';
-import {validateEmail} from '../../utils/Validations';
-import Colors from '../../utils/Colors';
-import * as Fonts from '../../utils/Fonts';
-import Header from '../../components/common/Header';
-import * as constants from '../../utils/Constants';
 import auth from '@react-native-firebase/auth';
+import React, {useState} from 'react';
+import {SafeAreaView, ScrollView, Text} from 'react-native';
+import Button from '../../components/common/Button';
+import Header from '../../components/common/Header';
+import Input from '../../components/common/Input';
+import {ToastMessage} from '../../utils/Helpers';
+import styles from './styles';
 
 interface Props {
   navigation: any;
@@ -49,45 +37,30 @@ const ContactForm: React.FC<Props> = props => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: Colors.bgColor,
-      }}>
+    <SafeAreaView style={styles.container}>
       <Header title="Form" />
-      <ScrollView
-        contentContainerStyle={{
-          paddingHorizontal: constants.horizontalSpace,
-          justifyContent: 'flex-end',
-        }}>
-        <Text
-          style={{
-            marginTop: constants.resWidth(5),
-            fontFamily: Fonts.typeSemiBold,
-            fontSize: Fonts.extraLargeFont,
-            color: Colors.baseColor,
-          }}>
-          Add User Name
-        </Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.titleText}>Add User Name</Text>
         <Input
           placeholder="Name"
           value={name}
           onChangeText={(value: string) => setName(value)}
-          inputStyleExt={{marginTop: constants.resWidth(5)}}
+          inputStyleExt={styles.inputStyle}
         />
         {/* <Input
           placeholder="Phone"
           value={phone}
           onChangeText={(value: string) => setPhone(value)}
-          inputStyleExt={{marginTop: constants.resWidth(5)}}
+          inputStyleExt={styles.inputStyle}
         /> */}
         <Button
           buttonName="Add Name"
           onPress={onAddUserName}
-          buttonStyle={{marginTop: constants.resWidth(15)}}
+          buttonStyle={styles.buttonStyle}
         />
       </ScrollView>
     </SafeAreaView>
   );
 };
+
 export default ContactForm;
