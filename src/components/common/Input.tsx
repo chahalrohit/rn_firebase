@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 // Define the props interface
 interface InputProps {
-  value: string;
+  value: any;
   maxLength?: number;
   onChangeText: (text: string) => void;
   placeholder: string;

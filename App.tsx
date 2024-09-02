@@ -1,9 +1,10 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
-import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle, StatusBar} from 'react-native';
 import Toast, {BaseToast, ToastConfig} from 'react-native-toast-message';
 import TabNavigation from './src/navigation/TabNavigation';
+import Colors from './src/utils/Colors';
 
 // import screens
 import Login from './src/screens/Auth/Login/Login';
@@ -26,13 +27,17 @@ function App() {
 
   return (
     <NavigationContainer>
+      <StatusBar
+        backgroundColor={Colors.whiteColor}
+        barStyle={'dark-content'}
+      />
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
         }}>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="Home" component={TabNavigation} />
+        <Stack.Screen name="HomeScreen" component={TabNavigation} />
       </Stack.Navigator>
       <Toast visibilityTime={1500} position="bottom" config={toastConfig} />
     </NavigationContainer>

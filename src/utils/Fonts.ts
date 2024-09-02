@@ -22,16 +22,16 @@ export const typeBold: string = 'Poppins-Bold';
 export const typeExtraBold: string = 'Poppins-ExtraBold';
 
 export const tinyFont: any =
-  Platform.OS === 'ios' ? getFontSize(9) : getFontSize(10);
+  Platform.OS === 'ios' ? getFontSize(9) : getFontSize(8);
 export const smallFont: any =
-  Platform.OS === 'ios' ? getFontSize(10) : getFontSize(11);
+  Platform.OS === 'ios' ? getFontSize(10) : getFontSize(9);
 export const normalFont: any =
-  Platform.OS === 'ios' ? getFontSize(14) : getFontSize(15);
+  Platform.OS === 'ios' ? getFontSize(14) : getFontSize(13);
 export const titleFont: any =
-  Platform.OS === 'ios' ? getFontSize(15) : getFontSize(16);
+  Platform.OS === 'ios' ? getFontSize(15) : getFontSize(14);
 export const buttonFont: any =
-  Platform.OS === 'ios' ? getFontSize(14) : getFontSize(15);
+  Platform.OS === 'ios' ? getFontSize(14) : getFontSize(13);
 export const largeFont: any =
-  Platform.OS === 'ios' ? getFontSize(16) : getFontSize(17);
+  Platform.OS === 'ios' ? getFontSize(16) : getFontSize(15);
 export const extraLargeFont: any =
-  Platform.OS === 'ios' ? getFontSize(20) : getFontSize(21);
+  Platform.OS === 'ios' ? getFontSize(20) : getFontSize(19);
