@@ -1,7 +1,13 @@
 import functions from '@react-native-firebase/functions';
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {Dimensions, SafeAreaView, ScrollView, View} from 'react-native';
+import {
+  Dimensions,
+  SafeAreaView,
+  ScrollView,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import {BarChart} from 'react-native-gifted-charts';
 import Orientation from 'react-native-orientation-locker';
 import Header from '../../components/common/Header';
@@ -24,9 +30,9 @@ interface BarData {
   frontColor: string;
 }
 
-const {width, height} = Dimensions.get('window');
-
 const Dashboard: React.FC = () => {
+  const {width, height} = useWindowDimensions();
+
   const [data, setData] = useState<BarData[]>([
     {value: 0, label: 'Jan', frontColor: Colors.baseColor},
     {value: 0, label: 'Feb', frontColor: Colors.baseColor},
