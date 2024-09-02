@@ -34,8 +34,8 @@ local.properties
 *.keystore
 !debug.keystore
 
-# Prevent the release folder from being pushed
-android/app/release/
+# Ignore specific release folder
+/android/app/release/
 
 # node.js
 #
